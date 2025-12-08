@@ -1,22 +1,17 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 
-string ApiKey   = "AIzaSyDNb3IWwI5tjnGXj4EFAsih0HJww1HgN7M";
-string Modelo   = "gemini-2.5-flash-preview-04-17";
-string endpoint = $"https://generativelanguage.googleapis.com/v1beta/models/{Modelo}:generateContent?key={ApiKey}";
-
-// Clases para manejar la comunicación con la API de Gemini
-public record MessageResponse(List<Candidate> Candidates);
-public record ContentRequest(List<Content> Contents);
-public record Candidate(Content Content);
-public record Content(List<Part> Parts, string Role);
-public record Part(string Text);
+// Configuración de la API
+const string ApiKey = "AIzaSyDNb3IWwI5tjnGXj4EFAsih0HJww1HgN7M";
+const string Modelo = "gemini-2.5-flash-preview-04-17";
+string endpoint     = $"https://generativelanguage.googleapis.com/v1beta/models/{Modelo}:generateContent?key={ApiKey}";
 
 // Crear un historial vacío para la conversación
 var historialChat = new List<Content>();
@@ -152,3 +147,10 @@ string ConvertirHistorialAMarkdown(List<Content> historial) {
     
     return sb.ToString();
 }
+
+// Clases para manejar la comunicación con la API de Gemini
+public record MessageResponse(List<Candidate> Candidates);
+public record ContentRequest(List<Content> Contents);
+public record Candidate(Content Content);
+public record Content(List<Part> Parts, string Role);
+public record Part(string Text);
